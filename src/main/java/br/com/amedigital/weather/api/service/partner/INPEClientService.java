@@ -21,6 +21,7 @@ public class INPEClientService extends BaseWebClient {
     private static final Logger LOG = getLogger(INPEClientService.class);
 
     public static final String CITY_WEATHER = "cidade/#/previsao.xml";
+    public static final String CITY_WEATHER_7DAYS = "cidade/7dias/#/previsao.xml";
 
     @Autowired
     public INPEClientService(final WebClient webClient, @Value("${partner.url}") final String url) {
@@ -31,13 +32,25 @@ public class INPEClientService extends BaseWebClient {
     public Mono<INPEWeatherCityResponse> findWeatherToCity(Integer cityCode) {
         LOG.debug("==== Find weather to city ====");
 
-        return handleGenericMono(HttpMethod.GET, urlWeather(cityCode), INPEWeatherCityResponse.class, MediaType.APPLICATION_XML_VALUE)
-                        .doOnError(throwable -> LOG.error("=== Error finding weather to city ===", throwable));
+        return handleGenericMono(HttpMethod.GET,
+                    urlWeather(CITY_WEATHER.replaceAll("#", String.valueOf(cityCode))),
+                    INPEWeatherCityResponse.class, MediaType.APPLICATION_XML_VALUE)
+                .doOnError(throwable -> LOG.error("=== Error finding weather to city ===", throwable));
     }
 
-    protected UriComponents urlWeather(Integer cityCode) {
+    @Trace(dispatcher = true)
+    public Mono<INPEWeatherCityResponse> findWeatherToCityNext7Days(Integer cityCode) {
+        LOG.debug("==== Find weather to city in the next 7 days====");
+
+        return handleGenericMono(HttpMethod.GET,
+                    urlWeather( CITY_WEATHER_7DAYS.replaceAll("#", String.valueOf(cityCode))),
+                    INPEWeatherCityResponse.class, MediaType.APPLICATION_XML_VALUE)
+                .doOnError(throwable -> LOG.error("=== Error finding weather to city in the next 7 days ===", throwable));
+    }
+
+    protected UriComponents urlWeather(String url) {
         return urlBuilder()
-                .pathSegment(CITY_WEATHER.replaceAll("#", String.valueOf(cityCode)))
+                .pathSegment(url)
                 .build();
     }
 

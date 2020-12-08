@@ -27,4 +27,10 @@ public class WeatherController {
         return weatherService.findWeatherToCity(Integer.parseInt(cityCode))
                 .doOnTerminate(() -> LOG.info("=== Finish finding weather to city ==="));
     }
+
+    @GetMapping("/7dias/{cityCode}")
+    public Flux<WeatherResponse> findWeatherToCityNext7Days(@PathVariable String cityCode) {
+        return weatherService.findWeatherToCityNext7Days(Integer.parseInt(cityCode))
+                .doOnTerminate(() -> LOG.info("=== Finish finding weather to city in the next 7 days==="));
+    }
 }

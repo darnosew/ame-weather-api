@@ -14,15 +14,15 @@ ame:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://localhost:3306/db_ame_weather?useUnicode=yes&characterEncoding=UTF-8&useTimezone=true&serverTimezone=America/Sao_Paulo
-    username: ame_weather
-    password: ame_weather
+    url: jdbc:mysql://${AME_WEATHER_DB_HOST}:${AME_WEATHER_DB_PORT}/${AME_WEATHER_DB_NAME}?useUnicode=yes&characterEncoding=UTF-8&useTimezone=true&serverTimezone=America/Sao_Paulo
+    username: ${AME_WEATHER_DB_USERNAME}
+    password: ${AME_WEATHER_DB_PSWD}
     hikari:
       maximumPoolSize: 4
   flyway:
-    url: jdbc:mysql://localhost:3306/db_ame_weather?useUnicode=yes&characterEncoding=UTF-8&useTimezone=true&serverTimezone=America/Sao_Paulo
-    username: ame_weather
-    password: ame_weather
+    url: jdbc:mysql://${AME_WEATHER_DB_HOST}:${AME_WEATHER_DB_PORT}/${AME_WEATHER_DB_NAME}?useUnicode=yes&characterEncoding=UTF-8&useTimezone=true&serverTimezone=America/Sao_Paulo
+    username: ${AME_WEATHER_DB_USERNAME}
+    password: ${AME_WEATHER_DB_PSWD}
     validate-on-migrate: false
   cache:
     clearAllCachesCron: '0 0 */1 ? * *'
