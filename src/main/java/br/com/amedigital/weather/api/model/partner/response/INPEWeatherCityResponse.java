@@ -9,6 +9,7 @@ public class INPEWeatherCityResponse {
     private String name;
     private String state;
     private String updatedAt;
+    private Integer cityCode;
     private List<Weather> weather;
 
     public static class Weather {
@@ -89,5 +90,13 @@ public class INPEWeatherCityResponse {
 
     public void setWeather(List<Weather> weather) {
         this.weather = weather;
+    }
+
+    public Integer getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(Integer cityCode) {
+        this.cityCode = cityCode;
     }
 }

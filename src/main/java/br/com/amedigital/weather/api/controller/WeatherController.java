@@ -22,9 +22,9 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @GetMapping("/{cityCode}")
-    public Flux<WeatherResponse> findWeatherToCity(@PathVariable String cityCode) {
-        return weatherService.findWeatherToCity(Integer.parseInt(cityCode))
+    @GetMapping("/{cityName}/{stateName}")
+    public Flux<WeatherResponse> findWeatherToCityByName(@PathVariable String cityName, @PathVariable String stateName) {
+        return weatherService.findWeatherToCityByName(cityName, stateName)
                 .doOnTerminate(() -> LOG.info("=== Finish finding weather to city ==="));
     }
 
